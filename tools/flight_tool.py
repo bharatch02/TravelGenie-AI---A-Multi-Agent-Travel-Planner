@@ -1,5 +1,5 @@
-import os 
-import re 
+import os
+import re
 import certifi
 import airportsdata
 import pycountry
@@ -22,7 +22,6 @@ BASE_URL = "https://api.aviationstack.com/v1/flights"
 
 
 AIRPORTS = airportsdata.load("IATA")
-
 
 
 COUNTRY_ALIASES = {
@@ -89,8 +88,6 @@ COUNTRY_MAIN_AIRPORT = {
 }
 
 
-
-
 CITY_MAIN_AIRPORT = {
     "dhaka": "DAC",
     "delhi": "DEL",
@@ -133,7 +130,6 @@ def clean_text(text: str) -> str:
     return " ".join(words).strip()
 
 
-
 def country_name_to_code(text: str):
     text = clean_text(text)
 
@@ -159,7 +155,6 @@ def country_name_to_code(text: str):
     return None
 
 
-
 def airport_country_matches(airport: dict, country_code: str) -> bool:
     airport_country = str(airport.get("country", "")).upper().strip()
 
@@ -174,8 +169,6 @@ def airport_country_matches(airport: dict, country_code: str) -> bool:
         pass
 
     return False
-
-
 
 
 def get_best_airport_for_country(country_code: str):
@@ -212,8 +205,6 @@ def get_best_airport_for_country(country_code: str):
 
     candidates.sort(reverse=True)
     return candidates[0][1]
-
-
 
 
 def resolve_location_to_iata(location: str):
@@ -283,8 +274,6 @@ def resolve_location_to_iata(location: str):
         return city_matches[0][1]
 
     return None
-
-
 
 
 def find_location_mentions(query: str):
@@ -421,7 +410,8 @@ def parse_route(query: str):
 
 def format_flight(flight: dict):
     airline = flight.get("airline", {}).get("name") or "Unknown airline"
-    flight_number = flight.get("flight", {}).get("iata") or "Unknown flight number"
+    flight_number = flight.get("flight", {}).get(
+        "iata") or "Unknown flight number"
     status = flight.get("flight_status") or "Unknown"
 
     dep = flight.get("departure", {}) or {}
@@ -530,7 +520,8 @@ def search_flights(query: str, limit: int = 10):
     elif arr_iata:
         route_info = f"Live flights to {arr_iata}"
 
-    formatted_flights = [format_flight(flight) for flight in flight_data[:limit]]
+    formatted_flights = [format_flight(flight)
+                         for flight in flight_data[:limit]]
 
     return f"{route_info}\n\n" + "\n\n---\n\n".join(formatted_flights)
 
