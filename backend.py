@@ -132,16 +132,10 @@ Generate the final travel response for the user.
 User Request:
 {state['user_query']}
 
-Flights:
-{state['flight_results']}
-
-Hotels:
-{state['hotel_results']}
-
-Itinerary:
+Research and Itinerary:
 {state['itinerary']}
 
-Format the final answer beautifically using these sections:
+Create a complete, practical travel response using these sections:
 
 1. Trip Summary
 2. Flight Information
@@ -151,9 +145,13 @@ Format the final answer beautifically using these sections:
 6. Final Recommendations
 
 Important:
-- Be clear and practical.
-- Mention that live flight API may not provide ticket prices if pricing is unavailable.
-- Keep the response useful for real travel planning.
+- Include all requested travel days.
+- Include departure and return flight information when available.
+- Include a complete budget breakdown.
+- Do not invent flight numbers, prices, or hotel availability.
+- Clearly label estimates that are not live-verified.
+- Keep the response detailed but concise.
+- Finish every section and do not leave sentences incomplete.
 """
     response = llm.invoke([
         SystemMessage(
